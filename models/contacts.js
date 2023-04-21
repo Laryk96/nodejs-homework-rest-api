@@ -4,7 +4,7 @@ const listContacts = async () => {
 	return operation.getContacts()
 }
 
-const getContactById = async contactId => {
+const getById = async contactId => {
 	const contacts = await operation.getContacts(contactId)
 
 	return contacts || null
@@ -37,7 +37,7 @@ const updateContact = async (contactId, body) => {
 
 module.exports = {
 	listContacts,
-	getContactById,
+	getById,
 	removeContact,
 	addContact,
 	updateContact,

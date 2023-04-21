@@ -1,5 +1,5 @@
-const addSchema = require('./contacts')
+const schemaContact = require('./contacts')
 
 module.exports = {
-	addSchema,
+	schemaContact,
 }
