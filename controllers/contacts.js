@@ -1,8 +1,14 @@
-const contactsApi = require('../models/contacts')
 const { HttpError, ctrlWrapper } = require('../helpers')
+const {
+	getAll,
+	getById,
+	createContact,
+	removeContact,
+	updateContact,
+} = require('../service/schemas/mongoose')
 
 const getAllContacts = async (req, res) => {
-	const result = await contactsApi.listContacts()
+	const result = await getAll()
 
 	res.status(200).json(result)
 }
@@ -10,52 +16,97 @@ const getAllContacts = async (req, res) => {
 const getContactById = async (req, res) => {
 	const { contactId } = req.params
 
-	const result = await contactsApi.getById(contactId)
+	const results = await getById(contactId)
 
-	if (!result) {
-		throw HttpError(404, 'Not found')
+	if (results) {
+		res.json({
+			status: 'success',
+			code: 200,
+			data: {
+				tasks: results,
+			},
+		})
+	} else {
+		res.status(404).json({
+			status: 'error',
+			code: 404,
+			message: `Not found task id: ${contactId}`,
+			data: 'Not Found',
+		})
 	}
-
-	res.status(200).json(result)
 }
 
-const addNewContact = async (req, res) => {
-	const result = await contactsApi.addContact(req.body)
+const createNewContact = async (req, res) => {
+	console.log(req.body)
+	const result = await createContact(req.body)
 
-	res.status(201).json(result)
+	res.json({
+		status: 'success',
+		code: 201,
+		data: {
+			tasks: result,
+		},
+	})
 }
 
 const removeContactById = async (req, res) => {
 	const { contactId } = req.params
 
-	const result = await contactsApi.removeContact(contactId)
+	const result = await removeContact(contactId)
 
 	if (!result) {
-		throw HttpError(404, 'Not found')
+		throw HttpError(404)
 	}
 
 	res.json({
-		status: { message: 'Delete success', code: 204 },
-		data: { ...result },
+		status: 'success',
+		code: 204,
+		data: {
+			tasks: result,
+		},
 	})
 }
 
 const updateContactById = async (req, res) => {
 	const { contactId } = req.params
 
-	const result = await contactsApi.updateContact(contactId, req.body)
+	const result = await updateContact(contactId, req.body)
 
 	if (!result) {
-		throw HttpError(404, 'Not found')
+		throw HttpError(404)
 	}
 
-	res.json(result)
+	res.json({
+		status: 'success',
+		code: 200,
+		data: {
+			tasks: result,
+		},
+	})
+}
+const UpdateFavorite = async (req, res) => {
+	const { contactId } = req.params
+
+	const result = await updateContact(contactId, req.body)
+
+	if (!result) {
+		throw HttpError(404)
+	}
+
+	res.json({
+		status: 'success',
+		code: 200,
+		data: {
+			tasks: result,
+		},
+	})
 }
 
 module.exports = {
 	getAllContacts: ctrlWrapper(getAllContacts),
 	getContactById: ctrlWrapper(getContactById),
-	addNewContact: ctrlWrapper(addNewContact),
+	addNewContact: ctrlWrapper(createNewContact),
 	removeContactById: ctrlWrapper(removeContactById),
 	updateContactById: ctrlWrapper(updateContactById),
+	UpdateFavorite: ctrlWrapper(UpdateFavorite),
 }

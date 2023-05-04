@@ -1,13 +1,20 @@
 const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
-
+require('dotenv').config()
 const contactsRouter = require('./routes/api/contacts')
+const { createLog } = require('./helpers')
 
 const app = express()
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 
+app.use((req, res, next) => {
+	const { method, url } = req
+
+	createLog({ method, url })
+	next()
+})
 app.use(logger(formatsLogger))
 app.use(cors())
 app.use(express.json())
