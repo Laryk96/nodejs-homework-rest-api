@@ -1,23 +1,40 @@
 const express = require('express')
-const ctrl = require('../../controllers/contacts')
-
-const { validateBody } = require('../../middlewapres')
-const { schemaContact: schema } = require('../../schemas')
+const {
+	getAllContacts,
+	getContactById,
+	addNewContact,
+	removeContactById,
+	updateContactById,
+	UpdateFavorite,
+} = require('../../controllers/contacts')
+const { validateBody, isValidId } = require('../../middlewapres')
+const {
+	addContact,
+	updateContact,
+	UpdateFavoriteContact,
+} = require('../../service/schemas/joi')
 
 const router = express.Router()
 
-router.get('/', ctrl.getAllContacts)
+router.get('/', getAllContacts)
 
-router.get('/:contactId', ctrl.getContactById)
+router.get('/:contactId', isValidId, getContactById)
 
-router.post('/', validateBody(schema.schemaAddContact), ctrl.addNewContact)
+router.post('/', validateBody(addContact), addNewContact)
 
-router.delete('/:contactId', ctrl.removeContactById)
+router.delete('/:contactId', isValidId, removeContactById)
 
 router.put(
 	'/:contactId',
-	validateBody(schema.schemaUpdateContact),
-	ctrl.updateContactById
+	isValidId,
+	validateBody(updateContact),
+	updateContactById
+)
+router.patch(
+	'/:contactId',
+	isValidId,
+	validateBody(UpdateFavoriteContact),
+	UpdateFavorite
 )
 
 module.exports = router
