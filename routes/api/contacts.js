@@ -12,7 +12,7 @@ const {
 	addContact,
 	updateContact,
 	UpdateFavoriteContact,
-} = require('../../service/schemas/joi')
+} = require('../../models/schemas/joi')
 
 const router = express.Router()
 
