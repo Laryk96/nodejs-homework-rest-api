@@ -5,11 +5,10 @@ const {
 	createContact,
 	removeContact,
 	updateContact,
-} = require('../service/schemas/mongoose')
+} = require('../service/Contacts.Service')
 
 const getAllContacts = async (req, res) => {
 	const result = await getAll()
-
 	res.status(200).json(result)
 }
 
