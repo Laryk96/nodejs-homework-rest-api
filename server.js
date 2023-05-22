@@ -8,7 +8,7 @@ const connection = mongoose.connect(DB_HOST)
 connection
 	.then(() => {
 		console.log(`Database connection successful`)
-		app.listen(PORT, () => console.log('Server is launched'))
+		app.listen(PORT, () => console.log(`Server is launched. PORT: ${PORT}`))
 	})
 	.catch(err => {
 		console.log(`Server not running. Error message: ${err.message}`)

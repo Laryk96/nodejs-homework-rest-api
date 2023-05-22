@@ -1,4 +1,11 @@
 const express = require('express')
+
+const { validateBody, isValidId, authenticate } = require('../../middlewapres')
+const {
+	addContact,
+	updateContact,
+	UpdateFavoriteContact,
+} = require('../../models/schemas/joi')
 const {
 	getAllContacts,
 	getContactById,
@@ -7,31 +14,27 @@ const {
 	updateContactById,
 	UpdateFavorite,
 } = require('../../controllers/contacts')
-const { validateBody, isValidId } = require('../../middlewapres')
-const {
-	addContact,
-	updateContact,
-	UpdateFavoriteContact,
-} = require('../../models/schemas/joi')
 
 const router = express.Router()
 
-router.get('/', getAllContacts)
+router.get('/', authenticate, getAllContacts)
 
-router.get('/:contactId', isValidId, getContactById)
+router.get('/:contactId', authenticate, isValidId, getContactById)
 
-router.post('/', validateBody(addContact), addNewContact)
+router.post('/', authenticate, validateBody(addContact), addNewContact)
 
-router.delete('/:contactId', isValidId, removeContactById)
+router.delete('/:contactId', authenticate, isValidId, removeContactById)
 
 router.put(
 	'/:contactId',
+	authenticate,
 	isValidId,
 	validateBody(updateContact),
 	updateContactById
 )
 router.patch(
 	'/:contactId',
+	authenticate,
 	isValidId,
 	validateBody(UpdateFavoriteContact),
 	UpdateFavorite
