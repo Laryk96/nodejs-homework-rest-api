@@ -12,7 +12,7 @@ const decodeToken = token => {
 
 		return payload
 	} catch (error) {
-		throw HttpError(401, 'JWT token is not valid')
+		throw HttpError(401, 'Not authorized')
 	}
 }
 

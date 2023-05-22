@@ -12,8 +12,13 @@ const getUserById = id => {
 	return User.findById(id, '-createdAt -updatedAt -password')
 }
 
+const userLogout = id => {
+	return User.findByIdAndUpdate({ _id: id }, { token: null })
+}
+
 module.exports = {
 	createUser,
 	findUserByEmail,
 	getUserById,
+	userLogout,
 }

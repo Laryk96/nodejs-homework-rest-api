@@ -9,8 +9,8 @@ const registration = async (req, res) => {
 	const result = await createUser({ ...req.body, password: hashedPassword })
 
 	res.status(201).json({
-		id: result._id,
 		email: result.email,
+		subscription: result.subscription,
 	})
 }
 

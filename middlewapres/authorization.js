@@ -1,6 +1,7 @@
 const { findUserByEmail } = require('../service/userService')
 const HttpError = require('../helpers/HttpError')
 const { checkPassByHash } = require('../helpers/hashOperation')
+const { ctrlWrapper } = require('../helpers')
 
 const authorization = async (req, res, next) => {
 	const { email, password } = req.body
@@ -22,4 +23,4 @@ const authorization = async (req, res, next) => {
 	next()
 }
 
-module.exports = authorization
+module.exports = ctrlWrapper(authorization)
