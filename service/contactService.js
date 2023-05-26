@@ -17,8 +17,8 @@ const getAll = async (id, query) => {
 	}).populate('owner', '_id username email subscription')
 }
 
-const getById = id => {
-	return Contact.findById(id)
+const getById = (contactId, owner) => {
+	return Contact.findById({ _id: contactId, owner })
 }
 
 const createContact = body => {
