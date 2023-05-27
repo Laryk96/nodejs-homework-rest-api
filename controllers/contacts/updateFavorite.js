@@ -5,7 +5,6 @@ const updateFavorite = async (req, res) => {
 	const { contactId } = req.params
 	const { favorite } = req.body
 	const { _id: owner } = req.user
-
 	const result = updateStatusContact(contactId, owner, favorite)
 
 	if (!result) {

@@ -1,7 +1,7 @@
 const { HttpError } = require('../../helpers')
 const { removeContact } = require('../../service/contactService')
 
-const removeContactById = async (req, res) => {
+const deleteContact = async (req, res) => {
 	const { contactId } = req.params
 
 	const { _id: owner } = req.user
@@ -19,4 +19,4 @@ const removeContactById = async (req, res) => {
 	})
 }
 
-module.exports = removeContactById
+module.exports = deleteContact

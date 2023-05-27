@@ -4,13 +4,13 @@ const { validateBody, isValidId, authenticate } = require('../../middlewapres')
 const {
 	addContact,
 	updateContact,
-	UpdateFavoriteContact,
+	schemaUpdateFavoriteContact,
 } = require('../../models/schemas/joi')
 const {
 	getAllContacts,
 	getContactById,
 	addNewContact,
-	removeContactById,
+	deleteContact,
 	updateContactById,
 	UpdateFavorite,
 } = require('../../controllers/contacts')
@@ -23,7 +23,7 @@ router.get('/:contactId', authenticate, isValidId, getContactById)
 
 router.post('/', authenticate, validateBody(addContact), addNewContact)
 
-router.delete('/:contactId', authenticate, isValidId, removeContactById)
+router.delete('/:contactId', authenticate, isValidId, deleteContact)
 
 router.put(
 	'/:contactId',
@@ -33,10 +33,10 @@ router.put(
 	updateContactById
 )
 router.patch(
-	'/:contactId',
+	'/:contactId/favorite',
 	authenticate,
 	isValidId,
-	validateBody(UpdateFavoriteContact),
+	validateBody(schemaUpdateFavoriteContact),
 	UpdateFavorite
 )
 

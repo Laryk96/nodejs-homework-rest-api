@@ -1,7 +1,8 @@
-const { findUserByEmail } = require('../service/userService')
+const { findUserByEmail, setUserToken } = require('../service/userService')
 const HttpError = require('../helpers/HttpError')
 const { checkPassByHash } = require('../helpers/hashOperation')
 const { ctrlWrapper } = require('../helpers')
+const { createToken } = require('../helpers/tokenOperation')
 
 const authorization = async (req, res, next) => {
 	const { email, password } = req.body
@@ -18,7 +19,11 @@ const authorization = async (req, res, next) => {
 		throw HttpError(401, 'Email or password is not valid')
 	}
 
-	req.user = user
+	const token = await createToken({ _id: user._id })
+	const userWithToken = await setUserToken(user._id, token)
+	console.log(user._id)
+
+	req.user = userWithToken
 
 	next()
 }

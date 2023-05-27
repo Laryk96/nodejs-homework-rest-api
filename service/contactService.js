@@ -2,7 +2,6 @@ const { Contact } = require('../models')
 
 const getAll = async (id, query) => {
 	const { page = 1, limit = 20, favorite } = query
-
 	const skip = (page - 1) * limit
 
 	if (favorite)
@@ -18,7 +17,7 @@ const getAll = async (id, query) => {
 }
 
 const getById = (contactId, owner) => {
-	return Contact.findById({ _id: contactId, owner })
+	return Contact.findOne({ _id: contactId, owner })
 }
 
 const createContact = body => {
@@ -26,11 +25,11 @@ const createContact = body => {
 }
 
 const updateContact = (id, owner, body) => {
-	return Contact.findByIdAndUpdate({ _id: id, owner }, body, { new: true })
+	return Contact.findOneAndUpdate({ _id: id, owner }, body, { new: true })
 }
 
 const updateStatusContact = (id, owner, body) => {
-	return Contact.findByIdAndUpdate(
+	return Contact.findOneAndUpdate(
 		{ _id: id, owner },
 		{ $set: { favorite: body } },
 		{ new: true }
@@ -38,7 +37,7 @@ const updateStatusContact = (id, owner, body) => {
 }
 
 const removeContact = (id, owner) => {
-	return Contact.findByIdAndRemove({ _id: id, owner })
+	return Contact.findOneAndRemove({ _id: id, owner })
 }
 
 module.exports = {

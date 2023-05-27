@@ -8,7 +8,7 @@ const schemaRegister = Joi.object({
 			tlds: { allow: ['com', 'net', 'org'] },
 		})
 		.required(),
-	password: Joi.string().min(7).required(),
+	password: Joi.string().min(6).required(),
 	subscription: Joi.string(),
 })
 

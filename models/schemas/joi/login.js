@@ -7,7 +7,7 @@ const schemaLogin = Joi.object({
 			tlds: { allow: ['com', 'net', 'org'] },
 		})
 		.required(),
-	password: Joi.string().min(7).required(),
+	password: Joi.string().min(6).required(),
 })
 
 module.exports = schemaLogin
