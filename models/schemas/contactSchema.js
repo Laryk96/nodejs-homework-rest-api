@@ -10,19 +10,24 @@ const contactSchema = new Schema(
 		},
 		email: {
 			type: String,
-			required: true,
 			unique: true,
 			match: dataRegExp.email,
+			required: true,
 		},
 		phone: {
 			type: String,
-			required: [true, 'phone is required'],
 			unique: true,
 			match: dataRegExp.phone,
+			required: [true, 'phone is required'],
 		},
 		favorite: {
 			type: Boolean,
 			default: false,
+		},
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: 'user',
+			required: true,
 		},
 	},
 	{ versionKey: false, timestamps: true }
